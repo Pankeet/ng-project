@@ -1,0 +1,68 @@
+<html>
+    <head> 
+        <title> 
+            Sign Up 
+        </title>
+    </head>
+
+<script src = "../angular.js"></script>
+<body style="display:flex ; background-color:aliceblue ;justify-content: center; font-family:Verdana, Geneva, Tahoma, sans-serif;">
+    <style>
+        .form{
+            background-color: #fdf6e3;
+            border: 2px solid black;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+        }
+
+        #dotnet{
+            justify-self: center;
+            background-color: blanchedalmond;
+        }
+    </style>
+<div class="form" style="margin: 2%;padding: 2%;" ng-app="SignApp" ng-controller="myCtrl" ng-show="form1"> 
+    <h1>Sign Up </h1>
+    <br>
+    Name : <input placeholder='FirstName LastName' ng-model ="name"><br><br><br>
+    Mobile Number : <input type = "number"  ng-model ="num"> <br> <span style="justify-items: center; font-size: small;" ng-bind="result"></span> <br> <br>
+    Age : <input type="number" ng-model="age">  <br> <br>
+<div id="dotnet">
+        <button style="justify-content: center; background-color: bisque;"type="submit" ng-click="submit()"> Submit </button>
+</div>
+</div>
+
+<script>
+    var app = angular.module('SignApp' , []);
+    app.controller("myCtrl", function($scope ,$document, $window , checknum ){
+        $scope.form1 = true ;
+        // ngclick event handling
+        $scope.submit = function(){
+           $scope.form1 = false;
+            $window.alert("SignUp Successful")
+        }
+
+        // calling custom service 
+        $scope.$watch("num", function(newnum){
+        $scope.result = checknum.mobnum(newnum);
+    });
+    });
+
+    // Mobile Number Service
+    app.service('checknum', function(){
+        this.mobnum = function(x){
+            x = x.toString();
+            if(x.length > 10){
+                return "Please Enter 10 digits only" ;
+            }
+            if(x.length < 10){
+                return "Please Enter 10 digits" ;
+            }
+            else {
+                return "";
+            }
+        }
+    })
+</script>
+</body>
+</html>
